@@ -8,6 +8,8 @@ Public release-only repo. Contains:
 
 Use when the remote machine has **X11 runtime** (viewer works) but **no `-dev` packages** (build fails on `libXrandr` / RandR headers).
 
+**Step-by-step commands:** see [`OFFLINE_BUILD.md`](OFFLINE_BUILD.md).
+
 ## Clone (HTTP)
 
 ```bash
