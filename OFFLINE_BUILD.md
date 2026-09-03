@@ -13,14 +13,14 @@ Verify downloads (optional):
 
 ```bash
 sha256sum -c x11-tarballs.sha256
-sha256sum -c pipetrace-0.1.0.sha256
+sha256sum -c pipetrace-0.2.0.sha256
 ```
 
 Extract pipetrace source and enter tree:
 
 ```bash
-tar -xJf pipetrace-0.1.0.tar.xz
-cd pipetrace-0.1.0
+tar -xJf pipetrace-0.2.0.tar.xz
+cd pipetrace-0.2.0
 ```
 
 Bootstrap local X11 dev prefix (fixes RandR / libXrandr header errors):
@@ -44,10 +44,10 @@ ls -1 build/pipetrace-*
 Example run (after you have a store):
 
 ```bash
-./build/pipetrace-view --store PATH.db --config config/pipetrace.linx.json
+./build/pipetrace-view --config config/pipetrace.linx.json PATH.db
 ```
 
-After a GUI build, CMake also copies `config/pipetrace.linx.json` → `pipetrace.app.json` next to `pipetrace-view`, so `--config` can be omitted. The viewer resolves config as `--config`, then `PIPETRACE_CONFIG`, then `pipetrace.app.json` beside the executable (not `<exe_dir>/config/`).
+After a GUI build, CMake also copies `config/pipetrace.linx.json` → `pipetrace.app.json` next to `pipetrace-view`, so `--config` can be omitted. The viewer resolves config as `--config`, then `PIPETRACE_CONFIG`, then `pipetrace.app.json` beside the executable (not `<exe_dir>/config/`). Positional store paths: `pipetrace-view [a.db] [b.db]`.
 
 ---
 
@@ -76,8 +76,8 @@ cmake --build build -j"$(nproc)"
 ```bash
 cd pipetrace_release && \
 sha256sum -c x11-tarballs.sha256 && \
-tar -xJf pipetrace-0.1.0.tar.xz && \
-cd pipetrace-0.1.0 && \
+tar -xJf pipetrace-0.2.0.tar.xz && \
+cd pipetrace-0.2.0 && \
 ../scripts/bootstrap_x11_prefix.sh --tarball-dir ../x11-tarballs && \
 ./build.sh
 ```
