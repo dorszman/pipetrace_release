@@ -3,13 +3,13 @@
 Public release-only repo. Contains:
 
 - **`pipetrace-0.1.0.tar.xz`** — pipetrace source (v0.1.0 tag), offline-capable (`third_party/` included)
-- **`pipetrace-v0.1.0-windows.zip`** — prebuilt Windows viewer (`pipetrace-view.exe` + config)
+- **`pipetrace-v0.1.0-windows.zip`** — prebuilt Windows viewer (`pipetrace-view.exe` + `pipetrace.linx.json` beside the exe)
 - **`x11-tarballs/`** — X.org sources to bootstrap missing X11 `-dev` headers (no sudo)
 - **`scripts/bootstrap_x11_prefix.sh`** — stages headers + linker symlinks into `deps/x11-prefix`
 
 Use when the remote machine has **X11 runtime** (viewer works) but **no `-dev` packages** (build fails on `libXrandr` / RandR headers).
 
-**Windows:** unzip `pipetrace-v0.1.0-windows.zip` and run `pipetrace-view.exe`. Optional checksum: `sha256sum -c pipetrace-v0.1.0-windows.sha256`.
+**Windows:** unzip `pipetrace-v0.1.0-windows.zip` and run `pipetrace-view.exe`. The zip ships `pipetrace.linx.json` in the **same folder** as the exe (not under `config/`); the viewer loads that adjacent file automatically. Optional checksum: `sha256sum -c pipetrace-v0.1.0-windows.sha256`.
 
 **Step-by-step Linux/offline build commands:** see [`OFFLINE_BUILD.md`](OFFLINE_BUILD.md).
 

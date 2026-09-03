@@ -44,8 +44,10 @@ ls -1 build/pipetrace-*
 Example run (after you have a store):
 
 ```bash
-./build/pipetrace-view --store PATH.db --config config/pipetrace.app.json
+./build/pipetrace-view --store PATH.db --config config/pipetrace.linx.json
 ```
+
+After a GUI build, CMake also copies `pipetrace.linx.json` next to `pipetrace-view`, so `--config` can be omitted. The viewer resolves config as `--config`, then `PIPETRACE_CONFIG`, then `pipetrace.linx.json` beside the executable (not `<exe_dir>/config/`).
 
 ---
 
