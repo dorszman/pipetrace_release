@@ -3,7 +3,7 @@
 Public release-only repo. Contains:
 
 - **`pipetrace-0.2.0.tar.xz`** — pipetrace source (`v0.2.0` tag), offline-capable (`third_party/` included)
-- **`pipetrace-v0.2.0-windows.zip`** — prebuilt Windows viewer (`pipetrace-view.exe` + `pipetrace.app.json` beside the exe) *(added when CI finishes)*
+- **`pipetrace-v0.2.0-windows.zip`** — prebuilt Windows viewer (`pipetrace-view.exe` + `pipetrace.app.json` beside the exe)
 - **`pipetrace-0.1.0.*` / `pipetrace-v0.1.0-windows.*`** — previous release kept for reference
 - **`x11-tarballs/`** — X.org sources to bootstrap missing X11 `-dev` headers (no sudo)
 - **`scripts/bootstrap_x11_prefix.sh`** — stages headers + linker symlinks into `deps/x11-prefix`
@@ -65,7 +65,7 @@ Requires system **runtime** libs (`libxrandr2`, `libx11-6`, …) — usually alr
 ```bash
 sha256sum -c x11-tarballs.sha256
 sha256sum -c pipetrace-0.2.0.sha256
-sha256sum -c pipetrace-v0.2.0-windows.sha256   # once Windows zip is published
+sha256sum -c pipetrace-v0.2.0-windows.sha256
 ```
 
 ## Contents
@@ -73,7 +73,7 @@ sha256sum -c pipetrace-v0.2.0-windows.sha256   # once Windows zip is published
 | Path | Size (approx) |
 |------|----------------|
 | `pipetrace-0.2.0.tar.xz` | 4.4 MiB |
-| `pipetrace-v0.2.0-windows.zip` | ~1 MiB (CI) |
+| `pipetrace-v0.2.0-windows.zip` | 1.0 MiB |
 | `x11-tarballs/` | 4.6 MiB |
 | `scripts/bootstrap_x11_prefix.sh` | — |
 
