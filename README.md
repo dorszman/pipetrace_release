@@ -3,12 +3,15 @@
 Public release-only repo. Contains:
 
 - **`pipetrace-0.1.0.tar.xz`** — pipetrace source (v0.1.0 tag), offline-capable (`third_party/` included)
+- **`pipetrace-v0.1.0-windows.zip`** — prebuilt Windows viewer (`pipetrace-view.exe` + config)
 - **`x11-tarballs/`** — X.org sources to bootstrap missing X11 `-dev` headers (no sudo)
 - **`scripts/bootstrap_x11_prefix.sh`** — stages headers + linker symlinks into `deps/x11-prefix`
 
 Use when the remote machine has **X11 runtime** (viewer works) but **no `-dev` packages** (build fails on `libXrandr` / RandR headers).
 
-**Step-by-step commands:** see [`OFFLINE_BUILD.md`](OFFLINE_BUILD.md).
+**Windows:** unzip `pipetrace-v0.1.0-windows.zip` and run `pipetrace-view.exe`. Optional checksum: `sha256sum -c pipetrace-v0.1.0-windows.sha256`.
+
+**Step-by-step Linux/offline build commands:** see [`OFFLINE_BUILD.md`](OFFLINE_BUILD.md).
 
 ## Clone (HTTP)
 
@@ -61,6 +64,7 @@ Requires system **runtime** libs (`libxrandr2`, `libx11-6`, …) — usually alr
 ```bash
 sha256sum -c x11-tarballs.sha256
 sha256sum -c pipetrace-0.1.0.sha256
+sha256sum -c pipetrace-v0.1.0-windows.sha256
 ```
 
 ## Contents
@@ -68,6 +72,7 @@ sha256sum -c pipetrace-0.1.0.sha256
 | Path | Size (approx) |
 |------|----------------|
 | `pipetrace-0.1.0.tar.xz` | 4.2 MiB |
+| `pipetrace-v0.1.0-windows.zip` | 1.0 MiB |
 | `x11-tarballs/` | 4.6 MiB |
 | `scripts/bootstrap_x11_prefix.sh` | — |
 
