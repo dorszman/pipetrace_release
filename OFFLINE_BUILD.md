@@ -13,14 +13,14 @@ Verify downloads (optional):
 
 ```bash
 sha256sum -c x11-tarballs.sha256
-sha256sum -c pipetrace-0.3.0.sha256
+sha256sum -c pipetrace-0.3.1.sha256
 ```
 
 Extract pipetrace source and enter tree:
 
 ```bash
-tar -xJf pipetrace-0.3.0.tar.xz
-cd pipetrace-0.3.0
+tar -xJf pipetrace-0.3.1.tar.xz
+cd pipetrace-0.3.1
 ```
 
 Bootstrap local X11 dev prefix (fixes RandR / libXrandr header errors):
@@ -76,8 +76,8 @@ cmake --build build -j"$(nproc)"
 ```bash
 cd pipetrace_release && \
 sha256sum -c x11-tarballs.sha256 && \
-tar -xJf pipetrace-0.3.0.tar.xz && \
-cd pipetrace-0.3.0 && \
+tar -xJf pipetrace-0.3.1.tar.xz && \
+cd pipetrace-0.3.1 && \
 ../scripts/bootstrap_x11_prefix.sh --tarball-dir ../x11-tarballs && \
 ./build.sh
 ```
