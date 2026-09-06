@@ -1,21 +1,33 @@
 # pipetrace offline release bundle
 
-**Windows debug (v0.3.6+):** unzip `pipetrace-v0.3.6-windows.zip` to a writable folder and double-click `run_debug.bat` (includes `tiny_analyzed.db`). Send Desktop `pipetrace-view*.log` copies + exit code back. See `README_WINDOWS_DEBUG.txt`.
+**Windows silent-exit bug: FIXED in v0.3.7.** Root cause was dynamic MSVC CRT
+linkage — the release ZIP ships a bare exe with no installer/redistributable,
+so a machine without the VC++ Redistributable already installed failed to
+launch the process before `main()` ever ran (no log, no MessageBox — looked
+exactly like a silent exit from inside the app). v0.3.7 statically links the
+CRT; verified via `dumpbin /dependents` (only USER32/KERNEL32/GDI32/SHELL32/
+IMM32.dll remain) and reproduced + confirmed working end-to-end on the same
+real Windows machine this was originally reported on, opening `tiny_analyzed.db`
+exactly as `WINDOWS_DEBUG_HANDOFF.md` described. That handoff doc is now
+deleted per its own stated closing instructions.
+
+**Windows (current):** unzip `pipetrace-v0.3.7-windows.zip` to a writable
+folder and double-click `run_debug.bat` (includes `tiny_analyzed.db`), or
+drag-and-drop `tiny_analyzed.db` onto `pipetrace-view.exe`. Do **not**
+double-click the exe alone with no store argument.
 
 Public release-only repo. Contains:
 
 - **`pipetrace-0.3.4.tar.xz`** — pipetrace source (`v0.3.4` tag), offline-capable (`third_party/` included)
-- **`pipetrace-v0.3.4-windows.zip`** — prebuilt Windows viewer (`pipetrace-view.exe` + `LICENSE` only; **no** `pipetrace.app.json`)
+- **`pipetrace-v0.3.7-windows.zip`** — prebuilt Windows viewer (`pipetrace-view.exe` + `LICENSE` + `tiny_analyzed.db` + `run_debug.bat` + `README_WINDOWS_DEBUG.txt`; static CRT, no `pipetrace.app.json`)
 - **`tiny_analyzed.db`** — tiny analyzed store with embedded `app_config_json` for Windows smoke / first open
-- **`pipetrace-0.3.3.*` / `pipetrace-v0.3.3-windows.*`**, **`pipetrace-0.3.2.*` / …**, **`pipetrace-0.3.1.*` / …**, **`pipetrace-0.3.0.*` / …**, **`pipetrace-0.2.0.*` / …**, **`pipetrace-0.1.0.*` / …** — previous releases kept for reference
+- **`pipetrace-v0.3.6-windows.*` / `pipetrace-v0.3.4-windows.*`**, **`pipetrace-0.3.3.*` / `pipetrace-v0.3.3-windows.*`**, **`pipetrace-0.3.2.*` / …**, **`pipetrace-0.3.1.*` / …**, **`pipetrace-0.3.0.*` / …**, **`pipetrace-0.2.0.*` / …**, **`pipetrace-0.1.0.*` / …** — previous releases kept for reference
 - **`x11-tarballs/`** — X.org sources to bootstrap missing X11 `-dev` headers (no sudo)
 - **`scripts/bootstrap_x11_prefix.sh`** — stages headers + linker symlinks into `deps/x11-prefix`
 
 Use when the remote machine has **X11 runtime** (viewer works) but **no `-dev` packages** (build fails on `libXrandr` / RandR headers).
 
-**Windows:** unzip `pipetrace-v0.3.4-windows.zip`. Open an **analyzed** `.db` (drag-and-drop onto the exe, or Open with) — config comes from the DB `app_config_json` embed. There is **no** `pipetrace.app.json` in the zip. For a quick smoke test, open `tiny_analyzed.db` from this repo. Do **not** double-click the exe alone. Fatals and hard crashes write `pipetrace-view.log` next to the exe (startup breadcrumbs + exception codes). Optional checksum: `sha256sum -c pipetrace-v0.3.4-windows.sha256`.
-
-**TEMPORARY Windows silent-exit debug:** see [`WINDOWS_DEBUG_HANDOFF.md`](WINDOWS_DEBUG_HANDOFF.md) (v0.2.0 works / v0.3.4+ exits; delete after fix).
+Optional checksum: `sha256sum -c pipetrace-v0.3.7-windows.sha256`.
 
 **Step-by-step Linux/offline build commands:** see [`OFFLINE_BUILD.md`](OFFLINE_BUILD.md).
 
@@ -70,7 +82,7 @@ Requires system **runtime** libs (`libxrandr2`, `libx11-6`, …) — usually alr
 ```bash
 sha256sum -c x11-tarballs.sha256
 sha256sum -c pipetrace-0.3.4.sha256
-sha256sum -c pipetrace-v0.3.4-windows.sha256
+sha256sum -c pipetrace-v0.3.7-windows.sha256
 sha256sum -c tiny_analyzed.db.sha256
 ```
 
@@ -79,7 +91,7 @@ sha256sum -c tiny_analyzed.db.sha256
 | Path | Size (approx) |
 |------|----------------|
 | `pipetrace-0.3.4.tar.xz` | 4.4 MiB |
-| `pipetrace-v0.3.4-windows.zip` | 1.1 MiB |
+| `pipetrace-v0.3.7-windows.zip` | 1.2 MiB |
 | `tiny_analyzed.db` | 88 KiB |
 | `x11-tarballs/` | 4.6 MiB |
 | `scripts/bootstrap_x11_prefix.sh` | — |
