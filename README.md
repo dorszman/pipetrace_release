@@ -1,15 +1,19 @@
 # pipetrace offline release bundle
 
-**Windows silent-exit bug: FIXED in v0.3.7.** Root cause was dynamic MSVC CRT
-linkage — the release ZIP ships a bare exe with no installer/redistributable,
-so a machine without the VC++ Redistributable already installed failed to
-launch the process before `main()` ever ran (no log, no MessageBox — looked
-exactly like a silent exit from inside the app). v0.3.7 statically links the
-CRT; verified via `dumpbin /dependents` (only USER32/KERNEL32/GDI32/SHELL32/
-IMM32.dll remain) and reproduced + confirmed working end-to-end on the same
-real Windows machine this was originally reported on, opening `tiny_analyzed.db`
-exactly as `WINDOWS_DEBUG_HANDOFF.md` described. That handoff doc is now
-deleted per its own stated closing instructions.
+**Windows silent-exit bug: FIXED in v0.3.7 (GitHub Actions CI build).**
+Root cause was dynamic MSVC CRT linkage — the release ZIP ships a bare exe
+with no installer/redistributable, so a machine without the VC++ Redistributable
+already installed failed to launch the process before `main()` ever ran (no
+log, no MessageBox). v0.3.7 statically links the CRT (`CMAKE_MSVC_RUNTIME_LIBRARY`
+MultiThreaded); CI asserts via `dumpbin /dependents` that the exe has no
+`VCRUNTIME`/`MSVCP` dependency. The ZIP below is the **official Windows Release
+workflow artifact** from tag `v0.3.7` (not a local-machine build).
+
+**Please A/B on the real Windows machine:** unzip this CI build next to an old
+broken build (e.g. `pipetrace-v0.3.4-windows.zip` or `pipetrace-v0.3.6-windows.zip`)
+and open `tiny_analyzed.db` with both. Working baseline remains
+`pipetrace-v0.2.0-windows.zip`. Temporary `WINDOWS_DEBUG_HANDOFF.md` was removed
+after the fix landed.
 
 **Windows (current):** unzip `pipetrace-v0.3.7-windows.zip` to a writable
 folder and double-click `run_debug.bat` (includes `tiny_analyzed.db`), or
@@ -19,7 +23,7 @@ double-click the exe alone with no store argument.
 Public release-only repo. Contains:
 
 - **`pipetrace-0.3.4.tar.xz`** — pipetrace source (`v0.3.4` tag), offline-capable (`third_party/` included)
-- **`pipetrace-v0.3.7-windows.zip`** — prebuilt Windows viewer (`pipetrace-view.exe` + `LICENSE` + `tiny_analyzed.db` + `run_debug.bat` + `README_WINDOWS_DEBUG.txt`; static CRT, no `pipetrace.app.json`)
+- **`pipetrace-v0.3.7-windows.zip`** — **GitHub Actions CI-built** Windows viewer (`pipetrace-view.exe` + `LICENSE` + `tiny_analyzed.db` + `run_debug.bat` + `README_WINDOWS_DEBUG.txt`; static CRT, no `pipetrace.app.json`)
 - **`tiny_analyzed.db`** — tiny analyzed store with embedded `app_config_json` for Windows smoke / first open
 - **`pipetrace-v0.3.6-windows.*` / `pipetrace-v0.3.4-windows.*`**, **`pipetrace-0.3.3.*` / `pipetrace-v0.3.3-windows.*`**, **`pipetrace-0.3.2.*` / …**, **`pipetrace-0.3.1.*` / …**, **`pipetrace-0.3.0.*` / …**, **`pipetrace-0.2.0.*` / …**, **`pipetrace-0.1.0.*` / …** — previous releases kept for reference
 - **`x11-tarballs/`** — X.org sources to bootstrap missing X11 `-dev` headers (no sudo)
