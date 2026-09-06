@@ -13,14 +13,14 @@ Verify downloads (optional):
 
 ```bash
 sha256sum -c x11-tarballs.sha256
-sha256sum -c pipetrace-0.3.3.sha256
+sha256sum -c pipetrace-0.3.4.sha256
 ```
 
 Extract pipetrace source and enter tree:
 
 ```bash
-tar -xJf pipetrace-0.3.3.tar.xz
-cd pipetrace-0.3.3
+tar -xJf pipetrace-0.3.4.tar.xz
+cd pipetrace-0.3.4
 ```
 
 Bootstrap local X11 dev prefix (fixes RandR / libXrandr header errors):
@@ -41,13 +41,23 @@ Binaries are under `build/`:
 ls -1 build/pipetrace-*
 ```
 
-Example run (after you have a store):
+Example run (after you have an **analyzed** store with embedded config):
 
 ```bash
-./build/pipetrace-view --config config/pipetrace.linx.json PATH.db
+./build/pipetrace-view PATH.db
 ```
 
-After a GUI build, CMake also copies `config/pipetrace.linx.json` → `pipetrace.app.json` next to `pipetrace-view`, so `--config` can be omitted. The viewer resolves config as `--config`, then `PIPETRACE_CONFIG`, then `pipetrace.app.json` beside the executable (not `<exe_dir>/config/`). Positional store paths: `pipetrace-view [a.db] [b.db]`.
+Analyzed stores carry `app_config_json` in meta, so a sidecar config file is not required. For developer builds, CMake may still copy `config/pipetrace.linx.json` → `pipetrace.app.json` next to `pipetrace-view` (useful for older DBs without an embed). Resolution order: store embed, then `--config`, then `PIPETRACE_CONFIG`, then exe-adjacent `pipetrace.app.json`. Positional store paths: `pipetrace-view [a.db] [b.db]`.
+
+### Windows notes
+
+The Windows ZIP ships **`pipetrace-view.exe` + `LICENSE` only** — no `pipetrace.app.json`. Open an analyzed `.db` (embed supplies config). Use repo-root `tiny_analyzed.db` for a smoke open:
+
+```text
+pipetrace-view.exe tiny_analyzed.db
+```
+
+(or drag-and-drop / Open with).
 
 ---
 
@@ -76,8 +86,8 @@ cmake --build build -j"$(nproc)"
 ```bash
 cd pipetrace_release && \
 sha256sum -c x11-tarballs.sha256 && \
-tar -xJf pipetrace-0.3.3.tar.xz && \
-cd pipetrace-0.3.3 && \
+tar -xJf pipetrace-0.3.4.tar.xz && \
+cd pipetrace-0.3.4 && \
 ../scripts/bootstrap_x11_prefix.sh --tarball-dir ../x11-tarballs && \
 ./build.sh
 ```
