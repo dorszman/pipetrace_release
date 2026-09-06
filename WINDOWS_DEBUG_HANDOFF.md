@@ -27,13 +27,15 @@ Public release: **dorszman/pipetrace_release** (this folder)
 |----------|------|
 | `pipetrace-v0.2.0-windows.zip` | **WORKING** baseline on this machine |
 | `pipetrace-v0.3.4-windows.zip` | **BROKEN** — contains `pipetrace-view.exe` + `LICENSE` only (**no** `pipetrace.app.json`) |
-| `tiny_analyzed.db` | Analyzed fixture with embedded `app_config_json` in SQLite `meta` |
+| `pipetrace-v0.3.6-windows.zip` | **Preferred debug kit** if present — exe + `tiny_analyzed.db` + `run_debug.bat` + `README_WINDOWS_DEBUG.txt` (multi-path logs) |
+| `tiny_analyzed.db` | Analyzed fixture with embedded `app_config_json` in SQLite `meta` (also inside the 0.3.6 zip) |
 
 Raw / blob URLs (if clone is awkward):
 
 - Repo: https://github.com/dorszman/pipetrace_release
 - Working zip: https://github.com/dorszman/pipetrace_release/raw/main/pipetrace-v0.2.0-windows.zip
 - Broken zip: https://github.com/dorszman/pipetrace_release/raw/main/pipetrace-v0.3.4-windows.zip
+- Debug kit zip: https://github.com/dorszman/pipetrace_release/raw/main/pipetrace-v0.3.6-windows.zip
 - Fixture DB: https://github.com/dorszman/pipetrace_release/raw/main/tiny_analyzed.db
 - This handoff: https://github.com/dorszman/pipetrace_release/blob/main/WINDOWS_DEBUG_HANDOFF.md
 
@@ -120,6 +122,13 @@ If a log exists, copy it to Desktop and keep the full text. If **none** exist, s
 
 - Confirm 0.2.0 folder still has `pipetrace.app.json`; 0.3.4 does not.
 - Do **not** copy `pipetrace.app.json` from 0.2.0 into 0.3.4 as the “fix” unless you are testing a hypothesis — the product requirement is DB-embed config for analyzed stores.
+
+## Preferred capture path (if `pipetrace-v0.3.6-windows.zip` is present)
+
+1. Unzip `pipetrace-v0.3.6-windows.zip` to a writable folder (e.g. Desktop\pipetrace-debug).
+2. Double-click `run_debug.bat` (keeps console open; prints exit code; copies logs to Desktop).
+3. Still A/B with extracted `pipetrace-v0.2.0-windows.zip` + same `tiny_analyzed.db` to prove the machine/OpenGL baseline.
+4. If 0.3.6 still silent-exits, you already have the always-on / multi-path log attempt — report exit code + whether Desktop `pipetrace-view*.log` copies exist.
 
 ## What the Windows agent should do
 
