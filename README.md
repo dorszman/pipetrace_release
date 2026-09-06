@@ -1,5 +1,7 @@
 # pipetrace offline release bundle
 
+**Windows debug (v0.3.6+):** unzip `pipetrace-v0.3.6-windows.zip` to a writable folder and double-click `run_debug.bat` (includes `tiny_analyzed.db`). Send Desktop `pipetrace-view*.log` copies + exit code back. See `README_WINDOWS_DEBUG.txt`.
+
 Public release-only repo. Contains:
 
 - **`pipetrace-0.3.4.tar.xz`** — pipetrace source (`v0.3.4` tag), offline-capable (`third_party/` included)
@@ -12,6 +14,8 @@ Public release-only repo. Contains:
 Use when the remote machine has **X11 runtime** (viewer works) but **no `-dev` packages** (build fails on `libXrandr` / RandR headers).
 
 **Windows:** unzip `pipetrace-v0.3.4-windows.zip`. Open an **analyzed** `.db` (drag-and-drop onto the exe, or Open with) — config comes from the DB `app_config_json` embed. There is **no** `pipetrace.app.json` in the zip. For a quick smoke test, open `tiny_analyzed.db` from this repo. Do **not** double-click the exe alone. Fatals and hard crashes write `pipetrace-view.log` next to the exe (startup breadcrumbs + exception codes). Optional checksum: `sha256sum -c pipetrace-v0.3.4-windows.sha256`.
+
+**TEMPORARY Windows silent-exit debug:** see [`WINDOWS_DEBUG_HANDOFF.md`](WINDOWS_DEBUG_HANDOFF.md) (v0.2.0 works / v0.3.4+ exits; delete after fix).
 
 **Step-by-step Linux/offline build commands:** see [`OFFLINE_BUILD.md`](OFFLINE_BUILD.md).
 
